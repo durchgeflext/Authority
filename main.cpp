@@ -17,10 +17,11 @@ int main(int argc, char** argv) {
     std::string configFile = argv[1];
     std::vector<std::string> lines;
 
-    std::ifstream reader(configFile);
-
+    std::ifstream reader;
+    reader.open(configFile, std::ios_base::in);
     if (reader.rdstate() == std::fstream::failbit) {
         std::cerr << "Encountered an error when attempting to read the file. Is the path correct?" << std::endl;
+        exit(1);
     }
 
     int lineCounter = 0;
@@ -34,6 +35,7 @@ int main(int argc, char** argv) {
     reader.close();
     if (reader.rdstate() == std::fstream::failbit) {
         std::cerr << "Encountered an error when attempting to close the file." << std::endl;
+        exit(1);
     }
 
     std::cout << "Read " << lineCounter << " lines" << std::endl;

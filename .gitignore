@@ -1,1 +1,6 @@
 configs/
+build*/
+.idea
+
+Authority
+Authority.exe
