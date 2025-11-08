@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
 
-    int lineCounter = 0;
+    uint32_t lineCounter = 0;
     std::string tmp;
     while(getline(reader, tmp)) {
         lines.push_back(tmp);
@@ -41,8 +41,10 @@ int main(int argc, char** argv) {
     std::cout << "Read " << lineCounter << " lines" << std::endl;
 
     if (lineCounter > 0) {
-        std::mt19937 rng(clock());
-        uint32_t selected = static_cast<float>(rng()) / static_cast<float>(rng.max()) * lineCounter;
+        time_t t;
+        time(&t);
+        std::mt19937 rng(t);
+        const uint32_t selected = static_cast<float>(rng()) / static_cast<float>(rng.max()) * lineCounter;
 
         std::transform(lines[selected].begin(), lines[selected].end(), lines[selected].begin(), [](auto c) {return std::toupper(c);});
         std::cout << "YOU SHOULD DO: \n\n\t\t" << lines[selected] << std::endl << std::endl;
