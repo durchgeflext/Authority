@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
     std::cout << "Read " << lineCounter << " lines" << std::endl;
 
     if (lineCounter > 0) {
-        std::mt19937 rng(std::hash<uint32_t>{}(clock()));
+        std::mt19937 rng(std::hash<uint32_t>{}(time(nullptr)));
         uint32_t r = rng();
         auto selected = static_cast<uint32_t>((static_cast<uint64_t>(r) * static_cast<uint64_t>(lineCounter)) >> 32);
 
