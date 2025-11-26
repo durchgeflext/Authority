@@ -41,12 +41,11 @@ int main(int argc, char** argv) {
     std::cout << "Read " << lineCounter << " lines" << std::endl;
 
     if (lineCounter > 0) {
-        time_t t;
-        time(&t);
-        std::mt19937 rng(t);
-        const uint32_t selected = static_cast<float>(rng()) / static_cast<float>(rng.max()) * lineCounter;
+        std::mt19937 rng(std::hash<uint32_t>{}(clock()));
+        uint32_t r = rng();
+        auto selected = static_cast<uint32_t>((static_cast<uint64_t>(r) * static_cast<uint64_t>(lineCounter)) >> 32);
 
-        std::transform(lines[selected].begin(), lines[selected].end(), lines[selected].begin(), [](auto c) {return std::toupper(c);});
+        std::ranges::transform(lines[selected], lines[selected].begin(), [](auto c) {return std::toupper(c);});
         std::cout << "YOU SHOULD DO: \n\n\t\t" << lines[selected] << std::endl << std::endl;
     }
 }
